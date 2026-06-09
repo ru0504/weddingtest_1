@@ -226,7 +226,7 @@
                     <p class="text-xs text-wedding-text/50 mt-1 uppercase tracking-widest">Gardenia Yellow</p>
                 </div>
 
-                <!-- 莫蘭迪綠 (已從原先的焦糖磚紅更換為莫蘭迪綠，配對英譯 Morandi Green) -->
+                <!-- 莫蘭迪綠 -->
                 <div class="group flex flex-col items-center">
                     <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-wedding-green shadow-lg mb-4 transform transition-transform group-hover:scale-110 flex items-center justify-center border-4 border-white">
                         <i class="ph-light ph-sparkles text-4xl text-white/50 opacity-0 group-hover:opacity-100 transition-opacity"></i>
@@ -403,7 +403,7 @@
     </main>
 
     <!-- 頁尾 -->
-    <footer class="bg-[#e8dfd3] py-10 text-center text-wedding-text/60 text-sm tracking-widest border-t border-[#d8cdbf]">
+    <footer class="bg-[#e8dfd3] py-10 text-center text-wedding-text/60 text-sm tracking-widest">
         <p class="mb-2">We are getting married</p>
         <p class="text-xs opacity-70">© 2026.12.20</p>
     </footer>
@@ -729,36 +729,64 @@
                         console.error("Firebase 存檔失敗:", fbErr);
                     }
 
-                    // 2. 同步發送至 Google 表單
+                    // 2. 同步發送至 Google 表單 (防 CORS 攔截之「動態隱藏 Iframe 提交法」)
                     try {
-                        const googleFormResponseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSefNTUwbGrRCjL997B1IE5wakpe36qZGl7cTKcgc-xjgIeoBg/formResponse";
-                        const googleFormData = new URLSearchParams();
-                        
-                        googleFormData.append('entry.175560831', name);
-                        googleFormData.append('entry.384600822', phone);
-                        googleFormData.append('entry.398847592', contactExtra);
-                        googleFormData.append('entry.1964494118', relation);
-                        googleFormData.append('entry.1878955960', diet);
-                        googleFormData.append('entry.238885315', attendance);
-                        googleFormData.append('entry.458369767', count);
-                        googleFormData.append('entry.1100887570', childSeats);
-                        googleFormData.append('entry.243660169', invitation);
-                        googleFormData.append('entry.461242157', message);
-                        googleFormData.append('entry.1670178957', finalRemarkForGoogle);
+                        // 建立臨時隱藏的 iframe 與 form
+                        const iframeName = 'hidden_iframe_' + Date.now();
+                        const hiddenIframe = document.createElement('iframe');
+                        hiddenIframe.name = iframeName;
+                        hiddenIframe.id = iframeName;
+                        hiddenIframe.style.display = 'none';
+                        document.body.appendChild(hiddenIframe);
 
-                        await fetch(googleFormResponseUrl, {
-                            method: 'POST',
-                            mode: 'no-cors',
-                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                            body: googleFormData
-                        });
+                        const hiddenForm = document.createElement('form');
+                        hiddenForm.action = "https://docs.google.com/forms/d/e/1FAIpQLSefNTUwbGrRCjL997B1IE5wakpe36qZGl7cTKcgc-xjgIeoBg/formResponse";
+                        hiddenForm.method = 'POST';
+                        hiddenForm.target = iframeName; // 將目標導向剛才建立的隱藏 iframe
+
+                        // 填充需要發送的參數資料
+                        const fields = {
+                            'entry.175560831': name,
+                            'entry.384600822': phone,
+                            'entry.398847592': contactExtra,
+                            'entry.1964494118': relation,
+                            'entry.1878955960': diet,
+                            'entry.238885315': attendance,
+                            'entry.458369767': count,
+                            'entry.1100887570': childSeats,
+                            'entry.243660169': invitation,
+                            'entry.461242157': message,
+                            'entry.1670178957': finalRemarkForGoogle
+                        };
+
+                        for (const [key, val] of Object.entries(fields)) {
+                            const input = document.createElement('input');
+                            input.type = 'hidden';
+                            input.name = key;
+                            input.value = val;
+                            hiddenForm.appendChild(input);
+                        }
+
+                        document.body.appendChild(hiddenForm);
+                        hiddenForm.submit(); // 原生送出表單，100% 避開 CORS 政策攔截
+
+                        // 送出後在 1.5 秒後自動清理生成的 DOM 節點
+                        setTimeout(() => {
+                            document.body.removeChild(hiddenForm);
+                            document.body.removeChild(hiddenIframe);
+                        }, 1500);
+
                     } catch (gErr) {
-                        console.log("Google 表單跨域傳送完成:", gErr);
+                        console.error("Google 表單傳送出錯:", gErr);
                     }
 
+                    // 顯示成功畫面
                     if (firebaseSuccess || true) {
                         form.classList.add('hidden');
                         document.getElementById('success-message').classList.remove('hidden');
+                        
+                        // 捲動到表單最上方以利閱讀成功訊息
+                        document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' });
                     } else {
                         errorDiv.innerText = "傳送失敗，請確認網路狀態後重試！";
                         errorDiv.classList.remove('hidden');
