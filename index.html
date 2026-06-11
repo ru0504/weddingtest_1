@@ -23,7 +23,8 @@
                             text: '#4A4238',
                             oatmeal: '#E2D5C4',
                             gardenia: '#FCE996',
-                            green: '#7D9B8B', // 已由焦糖磚紅（caramel）更換為雅緻的莫蘭迪綠（green）
+                            green: '#7D9B8B', // 主題莫蘭迪綠
+                            greenDark: '#516E61', // 新增：更顯眼且具層次感的深莫蘭迪綠
                             gold: '#D4AF37'
                         }
                     },
@@ -74,6 +75,17 @@
         .text-shadow-lg {
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
+
+        /* 手風琴折疊過渡動畫 */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
+            opacity: 0;
+        }
+        .accordion-content.open {
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="font-serif antialiased relative">
@@ -83,8 +95,8 @@
 
     <!-- Hero Section -->
     <header class="relative w-full h-[100svh] flex items-end justify-center overflow-hidden pb-20 sm:pb-28">
-        <!-- 背景圖 -->
-        <div class="absolute inset-0 z-0 bg-[url('https://i.postimg.cc/C5Tzrq3B/feng-mian.jpg')] bg-cover bg-center bg-no-repeat transition-transform duration-10000 hover:scale-105"></div>
+        <!-- 封面背景圖 -->
+        <div class="absolute inset-0 z-0 bg-[url('https://i.postimg.cc/Y2fSrr00/feng-mian-xiuok.jpg')] bg-cover bg-center bg-no-repeat transition-transform duration-10000 hover:scale-105"></div>
         <div class="absolute inset-0 z-10 hero-overlay"></div>
         
         <div class="relative z-20 text-center text-white px-4 animate-fade-in-up max-w-lg w-full">
@@ -133,67 +145,103 @@
         </section>
 
         <!-- Information & Transportation -->
-        <section class="fade-element grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        <section class="fade-element grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-8 items-start">
             
-            <!-- Banquet Info -->
-            <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] border border-wedding-oatmeal/30 relative">
-                <i class="ph-light ph-calendar-heart text-5xl text-wedding-oatmeal absolute top-8 right-8 opacity-50"></i>
-                <h2 class="text-2xl font-medium tracking-widest mb-8 border-b border-wedding-oatmeal pb-4 inline-block">午宴資訊</h2>
-                
-                <div class="space-y-6">
-                    <div class="flex items-start gap-4">
-                        <i class="ph-fill ph-clock text-xl text-wedding-green mt-1"></i>
-                        <div>
-                            <p class="font-medium text-lg tracking-wider mb-1">時間</p>
-                            <p class="text-wedding-text/80">2026年11月14日 (六)</p>
-                            <p class="text-wedding-text/80">12:00 準時開席</p>
+            <!-- Banquet Info (午宴資訊) -->
+            <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] border border-wedding-oatmeal/30 relative h-full flex flex-col justify-between">
+                <div>
+                    <i class="ph-light ph-calendar-heart text-5xl text-wedding-oatmeal absolute top-8 right-8 opacity-50"></i>
+                    <h2 class="text-2xl font-medium tracking-widest mb-8 border-b border-wedding-oatmeal pb-4 inline-block">午宴資訊</h2>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <i class="ph-fill ph-clock text-xl text-wedding-green mt-1"></i>
+                            <div>
+                                <p class="font-medium text-lg tracking-wider mb-1">時間</p>
+                                <p class="text-wedding-text/80 text-sm sm:text-base">2026年11月14日 (六)</p>
+                                <!-- 已加大字體並改用深莫蘭迪綠 -->
+                                <p class="text-wedding-greenDark font-bold text-lg sm:text-xl mt-1">12:00 準時開席</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex items-start gap-4">
-                        <i class="ph-fill ph-map-pin text-xl text-wedding-green mt-1"></i>
-                        <div>
-                            <p class="font-medium text-lg tracking-wider mb-1">地點</p>
-                            <p class="text-wedding-text/80 mb-2">晶宴會館-府中館 9F</p>
-                            <p class="text-sm text-wedding-text/60 mb-3">新北市板橋區景星里中山路一段46號9樓</p>
-                            <a href="https://maps.google.com/?q=晶宴會館-府中館" target="_blank" class="inline-flex items-center gap-2 text-xs text-white bg-wedding-green px-4 py-2 rounded-full hover:bg-opacity-90 transition-all">
-                                <i class="ph ph-navigation-arrow"></i> 開啟 Google 導航
-                            </a>
+                        <div class="flex items-start gap-4">
+                            <i class="ph-fill ph-map-pin text-xl text-wedding-green mt-1"></i>
+                            <div>
+                                <p class="font-medium text-lg tracking-wider mb-1">地點</p>
+                                <!-- 已加大字體並改用深莫蘭迪綠 -->
+                                <p class="text-wedding-greenDark font-bold text-lg sm:text-xl mb-1">晶宴會館-府中館 9F</p>
+                                <p class="text-sm text-wedding-text/60 leading-relaxed">新北市板橋區景星里中山路一段46號9樓</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div class="mt-8 pt-4 border-t border-gray-100">
+                    <a href="https://maps.google.com/?q=晶宴會館-府中館" target="_blank" class="w-full justify-center inline-flex items-center gap-2 text-sm text-white bg-wedding-green px-5 py-3 rounded-xl hover:bg-opacity-90 transition-all font-medium tracking-wider">
+                        <i class="ph ph-navigation-arrow"></i> 開啟 Google 導航
+                    </a>
+                </div>
             </div>
 
-            <!-- Traffic Info -->
+            <!-- Traffic Info (交通指南) -->
             <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] border border-wedding-oatmeal/30 relative">
                 <i class="ph-light ph-car-profile text-5xl text-wedding-oatmeal absolute top-8 right-8 opacity-50"></i>
                 <h2 class="text-2xl font-medium tracking-widest mb-8 border-b border-wedding-oatmeal pb-4 inline-block">交通指南</h2>
                 
-                <div class="space-y-6 text-sm">
-                    <!-- 搭乘公車 -->
-                    <div class="relative pl-6 before:content-[''] before:absolute before:left-0 before:top-2 before:w-2 before:h-2 before:bg-wedding-green before:rounded-full">
-                        <h3 class="font-medium text-base tracking-wider mb-2">搭乘公車</h3>
-                        <p class="text-wedding-text/70 leading-relaxed text-xs">
-                            請搭乘下列公車至「捷運府中站」下車：805、810、812、843、848、藍37、藍38 <br>
-                            <i class="ph ph-arrow-right inline align-middle mr-1 text-wedding-green"></i> 抵達後站商圈往誠品商場約步行3~5分鐘 <br>
-                            <i class="ph ph-arrow-right inline align-middle mr-1 text-wedding-green"></i> 抵達會館
-                        </p>
+                <div class="space-y-4 text-sm">
+                    <!-- 搭乘公車摺疊面板 -->
+                    <div class="border-b border-gray-100 pb-3">
+                        <button type="button" class="accordion-trigger w-full flex justify-between items-center py-2 text-left focus:outline-none group" data-target="traffic-bus">
+                            <div class="flex items-center gap-3">
+                                <span class="w-2 h-2 bg-wedding-green rounded-full"></span>
+                                <span class="font-medium text-base tracking-wider text-wedding-text group-hover:text-wedding-green transition-colors">搭乘公車</span>
+                            </div>
+                            <i class="ph ph-caret-down text-wedding-green/70 transition-transform duration-300"></i>
+                        </button>
+                        <div id="traffic-bus" class="accordion-content">
+                            <p class="text-wedding-text/70 leading-relaxed text-xs pt-2 pl-5">
+                                請搭乘下列公車至「捷運府中站」下車：805、810、812、843、848、藍37、藍38 <br>
+                                <span class="inline-block mt-2 text-wedding-green">
+                                    <i class="ph ph-arrow-right inline align-middle mr-1"></i> 抵達後站商圈往誠品商場約步行 3~5 分鐘即可抵達會館。
+                                </span>
+                            </p>
+                        </div>
                     </div>
-                    <!-- 自行開車 -->
-                    <div class="relative pl-6 before:content-[''] before:absolute before:left-0 before:top-2 before:w-2 before:h-2 before:bg-wedding-green before:rounded-full">
-                        <h3 class="font-medium text-base tracking-wider mb-2">自行開車</h3>
-                        <p class="text-wedding-text/70 leading-relaxed text-xs">
-                            北二高 <i class="ph ph-arrow-right inline align-middle mx-1 text-wedding-green"></i> 於中和交流道朝中和/中山路；板橋/文化路(台64線)方向下交流道 <br>
-                            <i class="ph ph-arrow-right inline align-middle mr-1 text-wedding-green"></i> 直行中正路後於中和區中山路左轉 <br>
-                            <i class="ph ph-arrow-right inline align-middle mr-1 text-wedding-green"></i> 並接續直行至板橋區民族路即可抵達板橋區中山路一段 <br>
-                            <i class="ph ph-arrow-right inline align-middle mr-1 text-wedding-green"></i> 抵達會館
-                        </p>
+
+                    <!-- 自行開車摺疊面板 -->
+                    <div class="border-b border-gray-100 pb-3">
+                        <button type="button" class="accordion-trigger w-full flex justify-between items-center py-2 text-left focus:outline-none group" data-target="traffic-car">
+                            <div class="flex items-center gap-3">
+                                <span class="w-2 h-2 bg-wedding-green rounded-full"></span>
+                                <span class="font-medium text-base tracking-wider text-wedding-text group-hover:text-wedding-green transition-colors">自行開車</span>
+                            </div>
+                            <i class="ph ph-caret-down text-wedding-green/70 transition-transform duration-300"></i>
+                        </button>
+                        <div id="traffic-car" class="accordion-content">
+                            <p class="text-wedding-text/70 leading-relaxed text-xs pt-2 pl-5 space-y-1">
+                                北二高 <i class="ph ph-arrow-right inline align-middle mx-1"></i> 於中和交流道朝中和/中山路；板橋/文化路(台64線)方向下交流道。<br>
+                                <span class="inline-block mt-1">
+                                    <i class="ph ph-arrow-right inline align-middle mr-1 text-wedding-green"></i> 直行中正路後於中和區中山路左轉，接續直行至板橋區民族路即可抵達板橋區中山路一段會館。
+                                </span>
+                            </p>
+                        </div>
                     </div>
-                    <!-- 搭乘捷運 -->
-                    <div class="relative pl-6 before:content-[''] before:absolute before:left-0 before:top-2 before:w-2 before:h-2 before:bg-wedding-green before:rounded-full">
-                        <h3 class="font-medium text-base tracking-wider mb-2">搭乘捷運</h3>
-                        <p class="text-wedding-text/70 leading-relaxed text-xs">
-                            捷運板南線(藍)：府中站1號出口或2號出口往後站商圈誠品商場方向約步行5~10分鐘。
-                        </p>
+
+                    <!-- 搭乘捷運摺疊面板 -->
+                    <div class="pb-1">
+                        <button type="button" class="accordion-trigger w-full flex justify-between items-center py-2 text-left focus:outline-none group" data-target="traffic-mrt">
+                            <div class="flex items-center gap-3">
+                                <span class="w-2 h-2 bg-wedding-green rounded-full"></span>
+                                <span class="font-medium text-base tracking-wider text-wedding-text group-hover:text-wedding-green transition-colors">搭乘捷運</span>
+                            </div>
+                            <i class="ph ph-caret-down text-wedding-green/70 transition-transform duration-300"></i>
+                        </button>
+                        <div id="traffic-mrt" class="accordion-content">
+                            <p class="text-wedding-text/70 leading-relaxed text-xs pt-2 pl-5">
+                                捷運板南線 (藍線)：<br>
+                                <span class="inline-block mt-1 text-wedding-green">
+                                    <i class="ph ph-arrow-right inline align-middle mr-1"></i> 於「捷運府中站」1號出口或2號出口出站，往後站商圈誠品商場方向步行約 5~10 分鐘即可抵達。
+                                </span>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -362,7 +410,7 @@
                     </div>
                 </div>
 
-                <!-- 祝福留言 -->
+                <!-- 祝福留言 (已移除後方的括號內容) -->
                 <div>
                     <label class="block text-sm font-medium text-wedding-text/80 mb-2 tracking-widest">對新人祝福</label>
                     <textarea id="guest-message" rows="2" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-wedding-green focus:ring-1 focus:ring-wedding-green outline-none transition-all bg-gray-50/50 resize-none" placeholder="留下您的祝福，與我們一起分享喜悅..."></textarea>
@@ -370,7 +418,7 @@
 
                 <!-- 備註事項 -->
                 <div>
-                    <label class="block text-sm font-medium text-wedding-text/80 mb-2 tracking-widest">備註事項 (僅新人可見)</label>
+                    <label class="block text-sm font-medium text-wedding-text/80 mb-2 tracking-widest">備註事項</label>
                     <textarea id="guest-remark" rows="2" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-wedding-green focus:ring-1 focus:ring-wedding-green outline-none transition-all bg-gray-50/50 resize-none" placeholder="任何需要我們注意的事項（例如：安排同桌的親友、特定食材過敏、詳細素食人數等）..."></textarea>
                 </div>
 
@@ -605,6 +653,47 @@
             }
         };
 
+        // --- 交通指南摺疊手風琴 JavaScript 互動邏輯 ---
+        document.querySelectorAll('.accordion-trigger').forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const targetId = trigger.getAttribute('data-target');
+                const content = document.getElementById(targetId);
+                const icon = trigger.querySelector('.ph-caret-down');
+                
+                // 檢查目前是否已展開
+                const isOpen = content.classList.contains('open');
+                
+                // 關閉其他所有的手風琴項目
+                document.querySelectorAll('.accordion-content').forEach(c => {
+                    c.style.maxHeight = '0px';
+                    c.classList.remove('open');
+                });
+                document.querySelectorAll('.accordion-trigger .ph-caret-down').forEach(i => {
+                    i.classList.remove('rotate-180');
+                });
+
+                // 如果原本是關閉的，則將目前的項目展開
+                if (!isOpen) {
+                    content.classList.add('open');
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    icon.classList.add('rotate-180');
+                }
+            });
+        });
+
+        // 預設展開第一個「搭乘公車」面板
+        window.addEventListener('DOMContentLoaded', () => {
+            const firstTrigger = document.querySelector('.accordion-trigger');
+            if (firstTrigger) {
+                const targetId = firstTrigger.getAttribute('data-target');
+                const content = document.getElementById(targetId);
+                const icon = firstTrigger.querySelector('.ph-caret-down');
+                content.classList.add('open');
+                content.style.maxHeight = content.scrollHeight + 'px';
+                icon.classList.add('rotate-180');
+            }
+        });
+
         // --- Google Form 送出整合邏輯 ---
         const form = document.getElementById('attendance-form');
         const submitBtn = document.getElementById('submit-btn');
@@ -671,7 +760,6 @@
                     input.type = 'hidden';
                     input.name = key;
                     input.value = val;
-                    hiddenForm.appendChild(input);
                 }
 
                 document.body.appendChild(hiddenForm);
