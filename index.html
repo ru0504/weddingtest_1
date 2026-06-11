@@ -471,14 +471,12 @@
         }, observerOptions);
         document.querySelectorAll('.fade-element').forEach(el => observer.observe(el));
 
-        // --- 三張可愛笑臉圖片飄落特效 (Canvas) ---
+        // --- 一張可愛笑臉圖片飄落特效 (Canvas) ---
         const canvas = document.getElementById('canvas-container');
         const ctx = canvas.getContext('2d');
         let width, height;
         const imgUrls = [
             'https://i.postimg.cc/FzhQKy8M/xiao-lian1.jpg',
-            'https://i.postimg.cc/ZRhGfPbd/xiao-lian2.jpg',
-            'https://i.postimg.cc/fWCGK06L/xiao-lian3.jpg'
         ];
         let loadedImages = [];
         let emojis = [];
