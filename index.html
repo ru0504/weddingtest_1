@@ -78,7 +78,7 @@
 </head>
 <body class="font-serif antialiased relative">
     
-    <!-- 笑臉特效畫布 -->
+    <!-- 花瓣與笑臉特效畫布 -->
     <canvas id="canvas-container"></canvas>
 
     <!-- Hero Section -->
@@ -471,15 +471,15 @@
         }, observerOptions);
         document.querySelectorAll('.fade-element').forEach(el => observer.observe(el));
 
-        // --- 一張可愛笑臉圖片飄落特效 (Canvas) ---
+        // --- 可愛笑臉圖片與飄落花瓣特效 (Canvas) ---
         const canvas = document.getElementById('canvas-container');
         const ctx = canvas.getContext('2d');
         let width, height;
         const imgUrls = [
-            'https://i.postimg.cc/FzhQKy8M/xiao-lian1.jpg',
+            'https://i.postimg.cc/FzhQKy8M/xiao-lian1.jpg' // 已修改：僅保留第一個笑臉圖案，移除另外兩個
         ];
         let loadedImages = [];
-        let emojis = [];
+        let animItems = [];
 
         function resizeCanvas() {
             width = canvas.width = window.innerWidth;
@@ -496,17 +496,17 @@
             reset() {
                 this.x = Math.random() * width;
                 this.y = -50;
-                this.size = 25 + Math.random() * 25;
-                this.speedY = 0.8 + Math.random() * 1.5;
-                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.size = 20 + Math.random() * 12; // 縮小尺寸，讓整體更精緻
+                this.speedY = 0.6 + Math.random() * 1.0;
+                this.speedX = (Math.random() - 0.5) * 0.4;
                 this.img = loadedImages[Math.floor(Math.random() * loadedImages.length)];
                 this.angle = Math.random() * Math.PI * 2;
-                this.rotation = (Math.random() - 0.5) * 0.03;
-                this.opacity = 0.3 + Math.random() * 0.5;
+                this.rotation = (Math.random() - 0.5) * 0.02;
+                this.opacity = 0.4 + Math.random() * 0.4;
             }
             update() {
                 this.y += this.speedY;
-                this.x += this.speedX + Math.sin(this.y / 80) * 0.2;
+                this.x += this.speedX + Math.sin(this.y / 100) * 0.2;
                 this.angle += this.rotation;
                 if (this.y > height + 50) this.reset();
             }
@@ -527,7 +527,47 @@
             }
         }
 
-        function initEmojiAnimation() {
+        class FloatingPetal {
+            constructor() {
+                this.reset();
+                this.y = Math.random() * height;
+            }
+            reset() {
+                this.x = Math.random() * width;
+                this.y = -20;
+                this.w = 5 + Math.random() * 8;
+                this.h = 9 + Math.random() * 11;
+                this.opacity = 0.3 + Math.random() * 0.5;
+                this.speedY = 0.5 + Math.random() * 1.2;
+                this.speedX = -0.5 + Math.random() * 0.8;
+                this.angle = Math.random() * Math.PI * 2;
+                this.spin = -0.02 + Math.random() * 0.04;
+                
+                // 優雅的莫蘭迪柔和色系
+                const colors = ['#E2D5C4', '#FCE996', '#7D9B8B', '#FFFFFF', '#F5EBE6'];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX + Math.sin(this.y / 80) * 0.3;
+                this.angle += this.spin;
+                if (this.y > height + 20) this.reset();
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = this.color;
+                
+                ctx.beginPath();
+                ctx.ellipse(0, 0, this.w / 2, this.h / 2, 0, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        function initAnimation() {
             let loadedCount = 0;
             imgUrls.forEach(url => {
                 const img = new Image();
@@ -536,20 +576,23 @@
                     loadedImages.push(img);
                     loadedCount++;
                     if (loadedCount === imgUrls.length) {
-                        emojis = Array.from({length: 15}, () => new FloatingEmoji());
-                        animateEmojis();
+                        // 建立較少量的笑臉圖片（6個）與適量的莫蘭迪色飄落花瓣（25個）
+                        const smileys = Array.from({length: 6}, () => new FloatingEmoji());
+                        const petals = Array.from({length: 25}, () => new FloatingPetal());
+                        animItems = [...smileys, ...petals];
+                        animate();
                     }
                 };
                 img.src = url;
             });
         }
 
-        function animateEmojis() {
+        function animate() {
             ctx.clearRect(0, 0, width, height);
-            emojis.forEach(e => { e.update(); e.draw(); });
-            requestAnimationFrame(animateEmojis);
+            animItems.forEach(item => { item.update(); item.draw(); });
+            requestAnimationFrame(animate);
         }
-        initEmojiAnimation();
+        initAnimation();
 
         // --- 表單 UI 互動 ---
         const attendanceRadios = document.querySelectorAll('input[name="attendance"]');
@@ -576,7 +619,7 @@
         const addressInput = document.getElementById('guest-address');
 
         invitationSelect.addEventListener('change', (e) => {
-            if (e.target.value === '需要，請寄紙本喜帖給我做紀念') {
+            if (e.target.value === '紙本喜帖' || e.target.value === '需要，請寄紙本喜帖給我做紀念') {
                 addressContainer.classList.remove('hidden');
                 addressInput.required = true;
             } else {
