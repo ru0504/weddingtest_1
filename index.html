@@ -23,8 +23,7 @@
                             text: '#4A4238',
                             oatmeal: '#E2D5C4',
                             gardenia: '#FCE996',
-                            green: '#7D9B8B', // 主題莫蘭迪綠
-                            greenDark: '#516E61', // 新增：更顯眼且具層次感的深莫蘭迪綠
+                            green: '#7D9B8B', // 已由焦糖磚紅（caramel）更換為雅緻的莫蘭迪綠（green）
                             gold: '#D4AF37'
                         }
                     },
@@ -95,7 +94,7 @@
 
     <!-- Hero Section -->
     <header class="relative w-full h-[100svh] flex items-end justify-center overflow-hidden pb-20 sm:pb-28">
-        <!-- 封面背景圖 -->
+        <!-- 封面背景圖已更換 -->
         <div class="absolute inset-0 z-0 bg-[url('https://i.postimg.cc/Y2fSrr00/feng-mian-xiuok.jpg')] bg-cover bg-center bg-no-repeat transition-transform duration-10000 hover:scale-105"></div>
         <div class="absolute inset-0 z-10 hero-overlay"></div>
         
@@ -144,7 +143,7 @@
             <p class="mt-8 text-sm text-wedding-text/50 tracking-widest leading-relaxed">「我曾經以為『成為英雄』是獨自拯救世界，但遇見你之後我才明白<br>只要能守護你的笑容，就是我一生最大的使命。」</p>
         </section>
 
-        <!-- Information & Transportation -->
+        <!-- Information & Transportation (調整版面結構，使兩側卡片高度與間距更加協調) -->
         <section class="fade-element grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-8 items-start">
             
             <!-- Banquet Info (午宴資訊) -->
@@ -158,18 +157,16 @@
                             <i class="ph-fill ph-clock text-xl text-wedding-green mt-1"></i>
                             <div>
                                 <p class="font-medium text-lg tracking-wider mb-1">時間</p>
-                                <p class="text-wedding-text/80 text-sm sm:text-base">2026年11月14日 (六)</p>
-                                <!-- 已加大字體並改用深莫蘭迪綠 -->
-                                <p class="text-wedding-greenDark font-bold text-lg sm:text-xl mt-1">12:00 準時開席</p>
+                                <p class="text-wedding-text/80">2026年11月14日 (六)</p>
+                                <p class="text-wedding-text/80">12:00 準時開席</p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
                             <i class="ph-fill ph-map-pin text-xl text-wedding-green mt-1"></i>
                             <div>
                                 <p class="font-medium text-lg tracking-wider mb-1">地點</p>
-                                <!-- 已加大字體並改用深莫蘭迪綠 -->
-                                <p class="text-wedding-greenDark font-bold text-lg sm:text-xl mb-1">晶宴會館-府中館 9F</p>
-                                <p class="text-sm text-wedding-text/60 leading-relaxed">新北市板橋區景星里中山路一段46號9樓</p>
+                                <p class="text-wedding-text/80 mb-2">晶宴會館-府中館 9F</p>
+                                <p class="text-sm text-wedding-text/60 mb-3">新北市板橋區景星里中山路一段46號9樓</p>
                             </div>
                         </div>
                     </div>
@@ -181,7 +178,7 @@
                 </div>
             </div>
 
-            <!-- Traffic Info (交通指南) -->
+            <!-- Traffic Info (交通指南 - 改為摺疊手風琴樣式) -->
             <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] border border-wedding-oatmeal/30 relative">
                 <i class="ph-light ph-car-profile text-5xl text-wedding-oatmeal absolute top-8 right-8 opacity-50"></i>
                 <h2 class="text-2xl font-medium tracking-widest mb-8 border-b border-wedding-oatmeal pb-4 inline-block">交通指南</h2>
@@ -410,13 +407,13 @@
                     </div>
                 </div>
 
-                <!-- 祝福留言 (已移除後方的括號內容) -->
+                <!-- 祝福留言 -->
                 <div>
-                    <label class="block text-sm font-medium text-wedding-text/80 mb-2 tracking-widest">對新人祝福</label>
+                    <label class="block text-sm font-medium text-wedding-text/80 mb-2 tracking-widest">對新人祝福 (將公開顯示在留言板)</label>
                     <textarea id="guest-message" rows="2" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-wedding-green focus:ring-1 focus:ring-wedding-green outline-none transition-all bg-gray-50/50 resize-none" placeholder="留下您的祝福，與我們一起分享喜悅..."></textarea>
                 </div>
 
-                <!-- 備註事項 -->
+                <!-- 備註事項 (已移除「僅新人可見」提示字眼) -->
                 <div>
                     <label class="block text-sm font-medium text-wedding-text/80 mb-2 tracking-widest">備註事項</label>
                     <textarea id="guest-remark" rows="2" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-wedding-green focus:ring-1 focus:ring-wedding-green outline-none transition-all bg-gray-50/50 resize-none" placeholder="任何需要我們注意的事項（例如：安排同桌的親友、特定食材過敏、詳細素食人數等）..."></textarea>
@@ -760,6 +757,7 @@
                     input.type = 'hidden';
                     input.name = key;
                     input.value = val;
+                    hiddenForm.appendChild(input);
                 }
 
                 document.body.appendChild(hiddenForm);
