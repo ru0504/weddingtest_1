@@ -12,6 +12,9 @@
         tailwind.config = {
             theme: {
                 extend: {
+                    screens: {
+                        'xs': '375px', // 新增超小螢幕斷點，確保手機上完美對齊
+                    },
                     fontFamily: {
                         serif: ['"Cormorant Garamond"', '"Noto Serif TC"', 'serif'],
                         display: ['"Cinzel"', 'serif'],
@@ -22,8 +25,10 @@
                             bg: '#FAFAF7',
                             text: '#4A4238',
                             oatmeal: '#E2D5C4',
-                            gardenia: '#FCE996',
-                            green: '#7D9B8B', // 已由焦糖磚紅（caramel）更換為雅緻的莫蘭迪綠（green）
+                            pinkPurple: '#D8B4C3',
+                            blue: '#7D9BBB',
+                            green: '#7D9B8B',
+                            greenDark: '#426154', // 莫蘭迪深綠色，突顯重點字
                             gold: '#D4AF37'
                         }
                     },
@@ -94,7 +99,7 @@
 
     <!-- Hero Section -->
     <header class="relative w-full h-[100svh] flex items-end justify-center overflow-hidden pb-20 sm:pb-28">
-        <!-- 封面背景圖已更換 -->
+        <!-- 背景圖 -->
         <div class="absolute inset-0 z-0 bg-[url('https://i.postimg.cc/Y2fSrr00/feng-mian-xiuok.jpg')] bg-cover bg-center bg-no-repeat transition-transform duration-10000 hover:scale-105"></div>
         <div class="absolute inset-0 z-10 hero-overlay"></div>
         
@@ -114,39 +119,40 @@
     <main class="max-w-4xl mx-auto px-4 sm:px-6 py-16 space-y-24">
         
         <!-- Countdown Section -->
-        <section class="fade-element text-center glass-card rounded-3xl p-8 sm:p-12 relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-wedding-oatmeal via-wedding-gardenia to-wedding-green"></div>
-            <h2 class="text-2xl sm:text-3xl font-medium tracking-widest mb-8 text-wedding-text/80">
+        <section class="fade-element text-center glass-card rounded-3xl p-6 sm:p-12 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-wedding-oatmeal via-wedding-pinkPurple to-wedding-blue"></div>
+            <h2 class="text-xl sm:text-3xl font-medium tracking-widest mb-8 text-wedding-text/80">
                 <i class="ph-light ph-hourglass-high mr-2 text-wedding-green"></i>THE COUNTDOWN
             </h2>
-            <div class="flex justify-center items-center gap-4 sm:gap-8">
-                <div class="flex flex-col items-center">
-                    <span id="cd-days" class="text-4xl sm:text-5xl font-bold text-wedding-green mb-2">00</span>
-                    <span class="text-sm tracking-widest text-wedding-text/60">天 Days</span>
+            <!-- 手機端排版：引入 xs 斷點，使「秒數」在小螢幕也能優雅排列不跑版 -->
+            <div class="flex justify-center items-center gap-1.5 xs:gap-4 sm:gap-8">
+                <div class="flex flex-col items-center min-w-[55px] xs:min-w-[65px] sm:min-w-[80px]">
+                    <span id="cd-days" class="text-2xl xs:text-4xl sm:text-5xl font-bold text-wedding-green mb-1">00</span>
+                    <span class="text-[9px] xs:text-xs sm:text-sm tracking-widest text-wedding-text/60">天 Days</span>
                 </div>
-                <span class="text-3xl sm:text-4xl font-light text-wedding-text/30 pb-6">:</span>
-                <div class="flex flex-col items-center">
-                    <span id="cd-hours" class="text-4xl sm:text-5xl font-bold text-wedding-green mb-2">00</span>
-                    <span class="text-sm tracking-widest text-wedding-text/60">時 Hours</span>
+                <span class="text-lg xs:text-2xl sm:text-3xl font-light text-wedding-text/30 pb-4">:</span>
+                <div class="flex flex-col items-center min-w-[55px] xs:min-w-[65px] sm:min-w-[80px]">
+                    <span id="cd-hours" class="text-2xl xs:text-4xl sm:text-5xl font-bold text-wedding-green mb-1">00</span>
+                    <span class="text-[9px] xs:text-xs sm:text-sm tracking-widest text-wedding-text/60">時 Hours</span>
                 </div>
-                <span class="text-3xl sm:text-4xl font-light text-wedding-text/30 pb-6">:</span>
-                <div class="flex flex-col items-center">
-                    <span id="cd-mins" class="text-4xl sm:text-5xl font-bold text-wedding-green mb-2">00</span>
-                    <span class="text-sm tracking-widest text-wedding-text/60">分 Mins</span>
+                <span class="text-lg xs:text-2xl sm:text-3xl font-light text-wedding-text/30 pb-4">:</span>
+                <div class="flex flex-col items-center min-w-[55px] xs:min-w-[65px] sm:min-w-[80px]">
+                    <span id="cd-mins" class="text-2xl xs:text-4xl sm:text-5xl font-bold text-wedding-green mb-1">00</span>
+                    <span class="text-[9px] xs:text-xs sm:text-sm tracking-widest text-wedding-text/60">分 Mins</span>
                 </div>
-                <span class="text-3xl sm:text-4xl font-light text-wedding-text/30 pb-6 hidden sm:block">:</span>
-                <div class="flex flex-col items-center hidden sm:flex">
-                    <span id="cd-secs" class="text-4xl sm:text-5xl font-bold text-wedding-green mb-2">00</span>
-                    <span class="text-sm tracking-widest text-wedding-text/60">秒 Secs</span>
+                <span class="text-lg xs:text-2xl sm:text-3xl font-light text-wedding-text/30 pb-4">:</span>
+                <div class="flex flex-col items-center min-w-[55px] xs:min-w-[65px] sm:min-w-[80px]">
+                    <span id="cd-secs" class="text-2xl xs:text-4xl sm:text-5xl font-bold text-wedding-green mb-1">00</span>
+                    <span class="text-[9px] xs:text-xs sm:text-sm tracking-widest text-wedding-text/60">秒 Secs</span>
                 </div>
             </div>
-            <p class="mt-8 text-sm text-wedding-text/50 tracking-widest leading-relaxed">「我曾經以為『成為英雄』是獨自拯救世界，但遇見你之後我才明白<br>只要能守護你的笑容，就是我一生最大的使命。」</p>
+            <p class="mt-8 text-xs sm:text-sm text-wedding-text/50 tracking-widest leading-relaxed">「我曾經以為『成為英雄』是獨自拯救世界，但遇見你之後我才明白<br>只要能守護你的笑容，就是我一生最大的使命。」</p>
         </section>
 
-        <!-- Information & Transportation (調整版面結構，使兩側卡片高度與間距更加協調) -->
-        <section class="fade-element grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-8 items-start">
+        <!-- Information & Transportation -->
+        <section class="fade-element grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
             
-            <!-- Banquet Info (午宴資訊) -->
+            <!-- Banquet Info -->
             <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] border border-wedding-oatmeal/30 relative h-full flex flex-col justify-between">
                 <div>
                     <i class="ph-light ph-calendar-heart text-5xl text-wedding-oatmeal absolute top-8 right-8 opacity-50"></i>
@@ -158,15 +164,17 @@
                             <div>
                                 <p class="font-medium text-lg tracking-wider mb-1">時間</p>
                                 <p class="text-wedding-text/80">2026年11月14日 (六)</p>
-                                <p class="text-wedding-text/80">12:00 準時開席</p>
+                                <!-- 加大、加粗並套用明顯但精緻的深色 -->
+                                <p class="text-wedding-greenDark font-bold text-xl sm:text-2xl mt-1 tracking-wide">12:00 準時開席</p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
                             <i class="ph-fill ph-map-pin text-xl text-wedding-green mt-1"></i>
                             <div>
                                 <p class="font-medium text-lg tracking-wider mb-1">地點</p>
-                                <p class="text-wedding-text/80 mb-2">晶宴會館-府中館 9F</p>
-                                <p class="text-sm text-wedding-text/60 mb-3">新北市板橋區景星里中山路一段46號9樓</p>
+                                <!-- 加大、加粗並套用明顯但精緻的深色 -->
+                                <p class="text-wedding-greenDark font-bold text-xl sm:text-2xl mb-1 tracking-wide">晶宴會館-府中館 9F</p>
+                                <p class="text-sm text-wedding-text/60 leading-relaxed">新北市板橋區景星里中山路一段46號9樓</p>
                             </div>
                         </div>
                     </div>
@@ -178,27 +186,24 @@
                 </div>
             </div>
 
-            <!-- Traffic Info (交通指南 - 改為摺疊手風琴樣式) -->
+            <!-- Traffic Info -->
             <div class="bg-white rounded-3xl p-8 sm:p-10 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] border border-wedding-oatmeal/30 relative">
                 <i class="ph-light ph-car-profile text-5xl text-wedding-oatmeal absolute top-8 right-8 opacity-50"></i>
                 <h2 class="text-2xl font-medium tracking-widest mb-8 border-b border-wedding-oatmeal pb-4 inline-block">交通指南</h2>
                 
                 <div class="space-y-4 text-sm">
-                    <!-- 搭乘公車摺疊面板 -->
+                    <!-- 搭乘捷運摺疊面板 -->
                     <div class="border-b border-gray-100 pb-3">
-                        <button type="button" class="accordion-trigger w-full flex justify-between items-center py-2 text-left focus:outline-none group" data-target="traffic-bus">
+                        <button type="button" class="accordion-trigger w-full flex justify-between items-center py-2 text-left focus:outline-none group" data-target="traffic-mrt">
                             <div class="flex items-center gap-3">
                                 <span class="w-2 h-2 bg-wedding-green rounded-full"></span>
-                                <span class="font-medium text-base tracking-wider text-wedding-text group-hover:text-wedding-green transition-colors">搭乘公車</span>
+                                <span class="font-medium text-base tracking-wider text-wedding-text group-hover:text-wedding-green transition-colors">搭乘捷運</span>
                             </div>
                             <i class="ph ph-caret-down text-wedding-green/70 transition-transform duration-300"></i>
                         </button>
-                        <div id="traffic-bus" class="accordion-content">
-                            <p class="text-wedding-text/70 leading-relaxed text-xs pt-2 pl-5">
-                                請搭乘下列公車至「捷運府中站」下車：805、810、812、843、848、藍37、藍38 <br>
-                                <span class="inline-block mt-2 text-wedding-green">
-                                    <i class="ph ph-arrow-right inline align-middle mr-1"></i> 抵達後站商圈往誠品商場約步行 3~5 分鐘即可抵達會館。
-                                </span>
+                        <div id="traffic-mrt" class="accordion-content">
+                            <p class="text-wedding-text/70 leading-relaxed text-sm pt-2 pl-5">
+                                捷運板南線(藍)：府中站1號出口或2號出口往後站商圈誠品商場方向約步行 5~10 分鐘即可抵達。
                             </p>
                         </div>
                     </div>
@@ -213,8 +218,8 @@
                             <i class="ph ph-caret-down text-wedding-green/70 transition-transform duration-300"></i>
                         </button>
                         <div id="traffic-car" class="accordion-content">
-                            <p class="text-wedding-text/70 leading-relaxed text-xs pt-2 pl-5 space-y-1">
-                                北二高 <i class="ph ph-arrow-right inline align-middle mx-1"></i> 於中和交流道朝中和/中山路；板橋/文化路(台64線)方向下交流道。<br>
+                            <p class="text-wedding-text/70 leading-relaxed text-sm pt-2 pl-5">
+                                北二高 <i class="ph ph-arrow-right inline align-middle mx-1 text-wedding-green"></i> 於中和交流道朝中和/中山路；板橋/文化路(台64線)方向下交流道。<br>
                                 <span class="inline-block mt-1">
                                     <i class="ph ph-arrow-right inline align-middle mr-1 text-wedding-green"></i> 直行中正路後於中和區中山路左轉，接續直行至板橋區民族路即可抵達板橋區中山路一段會館。
                                 </span>
@@ -222,20 +227,20 @@
                         </div>
                     </div>
 
-                    <!-- 搭乘捷運摺疊面板 -->
+                    <!-- 搭乘公車摺疊面板 -->
                     <div class="pb-1">
-                        <button type="button" class="accordion-trigger w-full flex justify-between items-center py-2 text-left focus:outline-none group" data-target="traffic-mrt">
+                        <button type="button" class="accordion-trigger w-full flex justify-between items-center py-2 text-left focus:outline-none group" data-target="traffic-bus">
                             <div class="flex items-center gap-3">
                                 <span class="w-2 h-2 bg-wedding-green rounded-full"></span>
-                                <span class="font-medium text-base tracking-wider text-wedding-text group-hover:text-wedding-green transition-colors">搭乘捷運</span>
+                                <span class="font-medium text-base tracking-wider text-wedding-text group-hover:text-wedding-green transition-colors">搭乘公車</span>
                             </div>
                             <i class="ph ph-caret-down text-wedding-green/70 transition-transform duration-300"></i>
                         </button>
-                        <div id="traffic-mrt" class="accordion-content">
-                            <p class="text-wedding-text/70 leading-relaxed text-xs pt-2 pl-5">
-                                捷運板南線 (藍線)：<br>
-                                <span class="inline-block mt-1 text-wedding-green">
-                                    <i class="ph ph-arrow-right inline align-middle mr-1"></i> 於「捷運府中站」1號出口或2號出口出站，往後站商圈誠品商場方向步行約 5~10 分鐘即可抵達。
+                        <div id="traffic-bus" class="accordion-content">
+                            <p class="text-wedding-text/70 leading-relaxed text-sm pt-2 pl-5">
+                                請搭乘下列公車至「捷運府中站」下車：805、810、812、843、848、藍37、藍38 <br>
+                                <span class="inline-block mt-2 text-wedding-green">
+                                    <i class="ph ph-arrow-right inline align-middle mr-1 text-wedding-green"></i> 抵達後站商圈往誠品商場約步行 3~5 分鐘即可抵達會館。
                                 </span>
                             </p>
                         </div>
@@ -262,22 +267,22 @@
                     <p class="text-xs text-wedding-text/50 mt-1 uppercase tracking-widest">Oatmeal</p>
                 </div>
                 
-                <!-- 梔子黃 -->
+                <!-- 粉藕紫 -->
                 <div class="group flex flex-col items-center">
-                    <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-wedding-gardenia shadow-lg mb-4 transform transition-transform group-hover:scale-110 flex items-center justify-center border-4 border-white">
+                    <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-wedding-pinkPurple shadow-lg mb-4 transform transition-transform group-hover:scale-110 flex items-center justify-center border-4 border-white">
                         <i class="ph-light ph-dress text-4xl text-wedding-text/30 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                     </div>
-                    <h3 class="font-medium tracking-widest">梔子黃</h3>
-                    <p class="text-xs text-wedding-text/50 mt-1 uppercase tracking-widest">Gardenia Yellow</p>
+                    <h3 class="font-medium tracking-widest">粉藕紫</h3>
+                    <p class="text-xs text-wedding-text/50 mt-1 uppercase tracking-widest">Dusty Pink</p>
                 </div>
 
-                <!-- 莫蘭迪綠 -->
+                <!-- 莫蘭迪藍 -->
                 <div class="group flex flex-col items-center">
-                    <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-wedding-green shadow-lg mb-4 transform transition-transform group-hover:scale-110 flex items-center justify-center border-4 border-white">
+                    <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-wedding-blue shadow-lg mb-4 transform transition-transform group-hover:scale-110 flex items-center justify-center border-4 border-white">
                         <i class="ph-light ph-sparkles text-4xl text-white/50 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                     </div>
-                    <h3 class="font-medium tracking-widest">莫蘭迪綠</h3>
-                    <p class="text-xs text-wedding-text/50 mt-1 uppercase tracking-widest">Morandi Green</p>
+                    <h3 class="font-medium tracking-widest">莫蘭迪藍</h3>
+                    <p class="text-xs text-wedding-text/50 mt-1 uppercase tracking-widest">Morandi Blue</p>
                 </div>
             </div>
         </section>
@@ -290,7 +295,7 @@
                 <p class="text-wedding-text/60 mt-3 text-sm tracking-wider">誠摯地邀請您參與我們的婚禮，請協助填寫以下資訊</p>
             </div>
 
-            <!-- 成功訊息畫面 (預設隱藏) -->
+            <!-- 成功訊息畫面 -->
             <div id="success-message" class="hidden flex flex-col items-center justify-center py-12 text-center">
                 <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-6">
                     <i class="ph-fill ph-check-circle text-4xl"></i>
@@ -409,11 +414,11 @@
 
                 <!-- 祝福留言 -->
                 <div>
-                    <label class="block text-sm font-medium text-wedding-text/80 mb-2 tracking-widest">對新人祝福 (將公開顯示在留言板)</label>
-                    <textarea id="guest-message" rows="2" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-wedding-green focus:ring-1 focus:ring-wedding-green outline-none transition-all bg-gray-50/50 resize-none" placeholder="留下您的祝福，與我們一起分享喜悅..."></textarea>
+                    <label class="block text-sm font-medium text-wedding-text/80 mb-2 tracking-widest">對新人祝福</label>
+                    <textarea id="guest-message" rows="2" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-wedding-green focus:ring-1 focus:ring-wedding-green outline-none transition-all bg-gray-50/50 resize-none" placeholder="留下您的祝福，與大家一起分享喜悅..."></textarea>
                 </div>
 
-                <!-- 備註事項 (已移除「僅新人可見」提示字眼) -->
+                <!-- 備註事項 -->
                 <div>
                     <label class="block text-sm font-medium text-wedding-text/80 mb-2 tracking-widest">備註事項</label>
                     <textarea id="guest-remark" rows="2" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-wedding-green focus:ring-1 focus:ring-wedding-green outline-none transition-all bg-gray-50/50 resize-none" placeholder="任何需要我們注意的事項（例如：安排同桌的親友、特定食材過敏、詳細素食人數等）..."></textarea>
@@ -551,8 +556,8 @@
                 this.angle = Math.random() * Math.PI * 2;
                 this.spin = -0.02 + Math.random() * 0.04;
                 
-                // 優雅的莫蘭迪柔和色系
-                const colors = ['#E2D5C4', '#FCE996', '#7D9B8B', '#FFFFFF', '#F5EBE6'];
+                // 優雅的莫蘭迪柔和色系（已將原本黃色/綠色花瓣微調至粉耦紫與莫蘭迪藍色調）
+                const colors = ['#E2D5C4', '#D8B4C3', '#7D9BBB', '#FFFFFF', '#F5EBE6'];
                 this.color = colors[Math.floor(Math.random() * colors.length)];
             }
             update() {
@@ -678,7 +683,7 @@
             });
         });
 
-        // 預設展開第一個「搭乘公車」面板
+        // 預設展開第一個「搭乘捷運」面板
         window.addEventListener('DOMContentLoaded', () => {
             const firstTrigger = document.querySelector('.accordion-trigger');
             if (firstTrigger) {
